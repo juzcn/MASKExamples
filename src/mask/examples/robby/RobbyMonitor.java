@@ -29,8 +29,6 @@ import javafx.scene.paint.Color;
 public class RobbyMonitor extends Monitor {
 
     public RobbyMonitor() {
-        tickMills = 500;
-        nTicks = 120;
     }
     String newLine = System.getProperty("line.separator");
 
@@ -53,7 +51,7 @@ public class RobbyMonitor extends Monitor {
     Image sodaImage = new Image("Soda_Can_16px_545363_easyicon.net.png");
 
     @Override
-    public void logAgents(Agent[] agents) {
+    public void process(Agent[] agents) {
         for (Agent agent : agents) {
             int row = (int) ((Robby) agent).getRow();
             int column = (int) ((Robby) agent).getColumn();
@@ -195,7 +193,7 @@ public class RobbyMonitor extends Monitor {
     }
 
     @Override
-    public void logWorld(World world) {
+    public void process(World world) {
         System.out.println("World update");
         GridSpace<RobbyWorld.CellState> gridSpace = ((RobbyWorld) world).getGridSpace();
         for (int i = 0; i < rowSize; i++) {

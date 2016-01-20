@@ -33,8 +33,6 @@ public class BeerGameMonitor extends Monitor {
     private Canvas canvas;
 
     public BeerGameMonitor() {
-        tickMills = 500;
-        nTicks = 120;
     }
     String newLine = System.getProperty("line.separator");
 
@@ -96,7 +94,7 @@ public class BeerGameMonitor extends Monitor {
     }
 
     @Override
-    public void logAgents(Agent[] agents) {
+    public void process(Agent[] agents) {
         for (Agent a : agents) {
             if (a instanceof Manufacturer) {
                 Platform.runLater(() -> {
@@ -108,7 +106,7 @@ public class BeerGameMonitor extends Monitor {
     }
 
     @Override
-    public void logWorld(World world) {
+    public void process(World world) {
     }
 
 }

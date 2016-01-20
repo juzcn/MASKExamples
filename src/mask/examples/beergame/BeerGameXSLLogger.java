@@ -23,7 +23,7 @@ public class BeerGameXSLLogger extends XLSLogger {
     }
 
     @Override
-    public void logAgents(Agent[] agents) {
+    public void process(Agent[] agents) {
         System.out.println("Agents Received "+agents.length);
         for (Agent a : agents) {
             if (a instanceof Manufacturer) {
@@ -36,7 +36,7 @@ public class BeerGameXSLLogger extends XLSLogger {
     }
 
     @Override
-    public void logWorld(World world) {
+    public void process(World world) {
     }
 
 }

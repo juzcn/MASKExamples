@@ -32,8 +32,6 @@ public class SchellingMonitor extends Monitor {
     private Canvas canvas;
 
     public SchellingMonitor() {
-        tickMills = 500;
-        nTicks = 120;
     }
     String newLine = System.getProperty("line.separator");
 
@@ -44,11 +42,11 @@ public class SchellingMonitor extends Monitor {
     private TextArea textArea;
 
     @Override
-    public void logAgents(Agent[] agents) {
+    public void process(Agent[] agents) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         for (Agent p : agents) {
             if (((Person) p).getMoved()) {
-                if (((Person) p).getOldRow()!= -1) {
+                if (((Person) p).getOldRow() != -1) {
                     int posY = ((Person) p).getOldRow() * 10;
                     int posX = ((Person) p).getColumn() * 10;
                     Platform.runLater(() -> {
@@ -73,7 +71,7 @@ public class SchellingMonitor extends Monitor {
     }
 
     @Override
-    public void logWorld(World world) {
+    public void process(World world) {
     }
 
     public static class Console extends OutputStream {

@@ -32,8 +32,6 @@ public class GoLMonitor extends Monitor {
     private Canvas canvas;
 
     public GoLMonitor() {
-        tickMills = 500;
-        nTicks = 120;
     }
     String newLine = System.getProperty("line.separator");
 
@@ -79,7 +77,7 @@ public class GoLMonitor extends Monitor {
     }
 
     @Override
-    public void logAgents(Agent[] agents) {
+    public void process(Agent[] agents) {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
         for (Agent lr : agents) {
@@ -108,7 +106,7 @@ public class GoLMonitor extends Monitor {
     }
 
     @Override
-    public void logWorld(World world) {
+    public void process(World world) {
     }
 
 }

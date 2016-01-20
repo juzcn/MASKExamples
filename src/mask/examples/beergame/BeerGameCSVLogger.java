@@ -22,7 +22,7 @@ public class BeerGameCSVLogger extends CSVLogger {
     }
 
     @Override
-    public void logAgents(Agent[] agents) {
+    public void process(Agent[] agents) {
         for (Agent a : agents) {
             if (a instanceof Retailer) {
                 writeRow(a.getUniqueID(), a.getTime(), ((Retailer) a).getInventory());
@@ -32,7 +32,7 @@ public class BeerGameCSVLogger extends CSVLogger {
     }
 
     @Override
-    public void logWorld(World world) {
+    public void process(World world) {
     }
 
 }
