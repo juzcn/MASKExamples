@@ -16,7 +16,7 @@ public class MessagingRemote {
 
     public static void main(String args[]) {
         IService service = (IService) Utils.getBean("java:global.MASKBeans.MASKBeans-ejb.DSServiceBean");
-        int id=service.newMailBox();
+        int id=service.newChannel();
         System.out.println();
         service.remoteJoinExecutorGroup(id);
         service.sendToExecutor("Hello !");

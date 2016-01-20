@@ -37,11 +37,11 @@ public class Company extends Agent {
         super.setup();
         timerCondition = new TimeCondition(1);
         state = CompanyState.Ready;
-        orderMailBox = service().newMailBox(getUniqueID(), "Order");
-        noticeMailBox = service().newMailBox(getUniqueID(), "Notice");
+        orderMailBox = service().newNamedChannel(getUniqueID(), "Order");
+        noticeMailBox = service().newNamedChannel(getUniqueID(), "Notice");
         setStateBehaviors(CompanyState.Ready, new Behavior(timerCondition, () -> periodBegin()));
-        setStateBehaviors(CompanyState.WaitOrder, new Behavior(() -> service().hasMail(orderMailBox), () -> processOrder()));
-        setStateBehaviors(CompanyState.WaitDeliveryNotice, new Behavior(() -> service().hasMail(noticeMailBox), () -> processDeliveryNotice()));
+        setStateBehaviors(CompanyState.WaitOrder, new Behavior(() -> service().hasMessage(orderMailBox), () -> processOrder()));
+        setStateBehaviors(CompanyState.WaitDeliveryNotice, new Behavior(() -> service().hasMessage(noticeMailBox), () -> processDeliveryNotice()));
 
     }
 
