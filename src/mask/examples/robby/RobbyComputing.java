@@ -11,7 +11,7 @@ import java.util.Random;
 import mask.examples.robby.Robby.Action;
 import mask.examples.robby.RobbyWorld.Situation;
 import mask.executor.MKExecutor;
-import mask.executor.LocalConfig;
+import mask.executor.LocalModel;
 import mask.executor.LocalExecutor;
 import mask.executor.MasterExecutor;
 import mask.rununit.RunGroup;
@@ -20,7 +20,7 @@ import mask.rununit.RunGroup;
  *
  * @author zj
  */
-public class RobbyComputing extends LocalConfig {
+public class RobbyComputing extends LocalModel {
 
     private Action[] strategy;
     Random random1 = new Random();

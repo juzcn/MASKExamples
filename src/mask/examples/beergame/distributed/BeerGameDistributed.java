@@ -7,7 +7,7 @@ package mask.examples.beergame.distributed;
 
 import mask.examples.beergame.BeerGameCSVLogger;
 import mask.examples.beergame.BeerGameXSLLogger;
-import mask.executor.DistributedConfig;
+import mask.executor.DistributedModel;
 import mask.executor.MKExecutor;
 
 /**
@@ -17,7 +17,7 @@ import mask.executor.MKExecutor;
 public class BeerGameDistributed  {
 
     public static void main(String args[]) {
-        DistributedConfig config=new DistributedConfig("java:global.MASKBeans.MASKBeans-ejb.BeerGame", new Remote1Config(),new Remote2Config());
+        DistributedModel config=new DistributedModel("java:global.MASKBeans.MASKBeans-ejb.BeerGame", new Remote1Config(),new Remote2Config());
         MKExecutor.newDistributedExecutor(config, null, new BeerGameCSVLogger(), new BeerGameXSLLogger()).run();
     }
 

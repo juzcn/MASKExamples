@@ -5,7 +5,7 @@
  */
 package mask.examples.serviceHall;
 
-import mask.executor.DistributedConfig;
+import mask.executor.DistributedModel;
 import mask.executor.MKExecutor;
 
 /**
@@ -16,7 +16,7 @@ public class ServiceHallDistributed {
 
     public static void main(String args[]) {
 //        DSExecutor.newExecutor(new BeerGameDistributed(), null).run();
-        DistributedConfig config = new DistributedConfig("java:global.MASKBeans.MASKBeans-ejb.ServiceHallBean", new Remote1Config());
+        DistributedModel config = new DistributedModel("java:global.MASKBeans.MASKBeans-ejb.ServiceHallBean", new Remote1Config());
         MKExecutor.newDistributedExecutor(config, null).run();
     }
 

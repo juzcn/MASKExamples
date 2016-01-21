@@ -7,13 +7,13 @@ package mask.examples.beergame;
 
 import mask.executor.MKExecutor;
 import mask.rununit.RunGroup;
-import mask.executor.LocalConfig;
+import mask.executor.LocalModel;
 
 /**
  *
  * @author zj
  */
-public class BeerGameConfig extends LocalConfig<BeerGameLocal> {
+public class BeerGameConfig extends LocalModel<BeerGameLocal> {
 
     private Manufacturer manufacturer;
     private Wholesaler wholesaler;

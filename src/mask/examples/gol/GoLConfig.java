@@ -6,14 +6,14 @@
 package mask.examples.gol;
 
 import mask.executor.LocalExecutor;
-import mask.executor.LocalConfig;
+import mask.executor.LocalModel;
 import mask.rununit.RunGroup;
 
 /**
  *
  * @author zj
  */
-public class GoLConfig extends LocalConfig<GoL> {
+public class GoLConfig extends LocalModel<GoL> {
 
     private CellAgent[] cells = new CellAgent[10000];
 

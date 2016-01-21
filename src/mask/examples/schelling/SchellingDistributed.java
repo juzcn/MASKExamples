@@ -5,7 +5,7 @@
  */
 package mask.examples.schelling;
 
-import mask.executor.DistributedConfig;
+import mask.executor.DistributedModel;
 import mask.executor.MKExecutor;
 
 /**
@@ -15,7 +15,7 @@ import mask.executor.MKExecutor;
 public class SchellingDistributed {
 
     public static void main(String args[]) {
-        DistributedConfig config = new DistributedConfig("java:global.MASKBeans.MASKBeans-ejb.SchellingBean", new SchellingRemoteConfig());
+        DistributedModel config = new DistributedModel("java:global.MASKBeans.MASKBeans-ejb.SchellingBean", new SchellingRemoteConfig());
         config.setSteps(2);
         MKExecutor.newDistributedExecutor(config, null).run();
     }

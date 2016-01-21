@@ -6,14 +6,14 @@
 package mask.examples.serviceHall;
 
 import mask.executor.LocalExecutor;
-import mask.executor.LocalConfig;
+import mask.executor.LocalModel;
 import mask.rununit.RunGroup;
 
 /**
  *
  * @author zj
  */
-public class ServiceHallConfig extends LocalConfig<ServiceH> {
+public class ServiceHallConfig extends LocalModel<ServiceH> {
 
     public ServiceHallConfig() {
         super(ServiceH.class);

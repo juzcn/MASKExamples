@@ -8,13 +8,13 @@ package mask.examples.schelling;
 import mask.executor.LocalExecutor;
 import mask.rununit.RunGroup;
 import java.util.Random;
-import mask.executor.LocalConfig;
+import mask.executor.LocalModel;
 
 /**
  *
  * @author zj
  */
-public class SchellingConfig extends LocalConfig<Schelling> {
+public class SchellingConfig extends LocalModel<Schelling> {
 
     private final Random random = new Random();
     private final Person[] persons = new Person[8000];
