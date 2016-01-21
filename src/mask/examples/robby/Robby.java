@@ -13,33 +13,33 @@ import java.util.Random;
  * @author zj
  */
 public class Robby extends SimpleAgent {
-
+    
     private static final Random random = new Random();
     private int row, column;
     private final Action[] stragtegy;
-
+    
     public Robby(Action[] strategy) {
         row = 0;
         column = 0;
         this.stragtegy = strategy;
     }
     private RobbyWorld.Situation situation;
-
+    
     @Override
     public boolean perceive() {
         situation = ((RobbyWorld) world()).getSituation(row, column);
         return false;
     }
-
+    
     public static enum Action {
         MoveNorth, MoveSouth, MoveEast, MoveWest, RandomMove, StayPut, PickUp
     }
     private int rewards = 0;
     private boolean success;
-
+    
     @Override
     public boolean actuate() {
-        int situationIndex = RobbyConfig.situationList.indexOf(situation);
+        int situationIndex = RobbyComputing.situationList.indexOf(situation);
 //        Action action = this.stragtegy[situationIndex];
 //        Action action = strategyTable.get(situation);
         Action action = Action.values()[random.nextInt(7)];
@@ -106,9 +106,10 @@ public class Robby extends SimpleAgent {
     public int getColumn() {
         return column;
     }
-
+    
     @Override
     public void stop() {
         System.out.println("Total rewards : " + rewards);
+        service().writeResult(rewards);
     }
 }

@@ -13,24 +13,25 @@ import mask.examples.robby.RobbyWorld.Situation;
 import mask.executor.MKExecutor;
 import mask.executor.LocalConfig;
 import mask.executor.LocalExecutor;
+import mask.executor.MasterExecutor;
 import mask.rununit.RunGroup;
 
 /**
  *
  * @author zj
  */
-public class RobbyConfig extends LocalConfig {
+public class RobbyComputing extends LocalConfig {
 
     private Action[] strategy;
     Random random1 = new Random();
 
-    public RobbyConfig(Action[] strategy) {
+    public RobbyComputing(Action[] strategy) {
         super(RobbyWorld.class);
         this.setSteps(2);
         this.strategy = strategy;
     }
 
-    public RobbyConfig() {
+    public RobbyComputing() {
         super(RobbyWorld.class);
         this.setSteps(2);
         this.strategy = new Action[situationList.size()];
@@ -115,13 +116,13 @@ public class RobbyConfig extends LocalConfig {
             }
         }
 
-        for (int i = 0;
-                i < 200; i++) {
+        for (int i = 0; i < 1; i++) {
             System.out.println("Strategy " + i);
-            for (int j = 0; j < 100; j++) {
+            for (int j = 0; j < 1; j++) {
                 System.out.println("Round " + j);
-                LocalExecutor executor = MKExecutor.newLocalExecutor(new RobbyConfig(initialPopulation[i]), null);
-                executor.start(200, 0);
+                LocalExecutor executor = MasterExecutor.newLocalComputing(new RobbyComputing(initialPopulation[i]));
+                executor.start(200);
+                System.out.println("Round "+j + " Result = "+executor.getResult());
             }
         }
 

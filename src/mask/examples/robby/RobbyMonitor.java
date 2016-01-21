@@ -185,7 +185,7 @@ public class RobbyMonitor extends Monitor {
 
     @Override
     protected LocalExecutor newExecutor() {
-        return LocalExecutor.newLocalExecutor(new RobbyConfig(), this);
+        return LocalExecutor.newLocalExecutor(new RobbyComputing(), this);
     }
 
     private void clear(int row, int column, int margin) {
