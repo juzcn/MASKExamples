@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Random;
 import mask.examples.robby.Robby.Action;
 import mask.examples.robby.RobbyWorld.Situation;
-import mask.executor.MKExecutor;
 import mask.executor.LocalModel;
 import mask.executor.LocalExecutor;
 import mask.executor.MasterExecutor;
