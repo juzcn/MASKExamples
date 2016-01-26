@@ -9,7 +9,7 @@ import mask.executor.MKExecutor;
 import mask.agent.Behavior;
 import mask.agent.Condition;
 import mask.agent.Agent;
-import mask.agent.TimeCondition;
+import mask.agent.AtTimeCondition;
 import java.io.Serializable;
 import java.util.Random;
 
@@ -21,12 +21,12 @@ import java.util.Random;
 public class Customer extends Agent implements Serializable {
 
     private final Random random = new Random();
-    private TimeCondition timerCondition;
+    private AtTimeCondition timerCondition;
 
     @Override
     public void setup() {
         super.setup();
-        timerCondition = new TimeCondition(0);
+        timerCondition = new AtTimeCondition(0);
         state = CustomerState.Idle;
         setStateBehaviors(CustomerState.Idle, new Behavior(Condition.TRUE, () -> mystart()));
         setStateBehaviors(CustomerState.WaitingInQueue, new Behavior(() -> ((IServiceHall) world()).isFirst(getUniqueID()), () -> beingServiced()));

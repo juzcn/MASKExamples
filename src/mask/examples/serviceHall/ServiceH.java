@@ -46,8 +46,5 @@ public class ServiceH extends World implements IServiceHall {
         queue.poll();
     }
 
-    @Override
-    public void close() {
-    }
 
 }

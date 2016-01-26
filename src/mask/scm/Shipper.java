@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mask.examples.beergame.distributed;
+package mask.scm;
 
-import mask.world.IWorld;
-import javax.ejb.Remote;
+import mask.agent.Agent;
 
 /**
  *
  * @author zj
  */
-@Remote
-public interface BeerGameRemote extends IWorld {
-    
+public class Shipper extends Agent {
+
 }

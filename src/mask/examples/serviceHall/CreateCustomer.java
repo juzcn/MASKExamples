@@ -9,7 +9,7 @@ import mask.executor.MKExecutor;
 import mask.agent.Behavior;
 import mask.agent.Condition;
 import mask.agent.Agent;
-import mask.agent.TimeCondition;
+import mask.agent.AtTimeCondition;
 import java.util.Random;
 
 /**
@@ -20,7 +20,7 @@ import java.util.Random;
 public class CreateCustomer extends Agent {
 
     private final Random random = new Random();
-    private TimeCondition timerCondition;
+    private AtTimeCondition timerCondition;
     private long maxTime;
 
     public CreateCustomer(long maxTime) {
@@ -30,7 +30,7 @@ public class CreateCustomer extends Agent {
     @Override
     public void setup() {
         super.setup();
-        timerCondition = new TimeCondition(0);
+        timerCondition = new AtTimeCondition(0);
         state = CreateCustomerState.Created;
         setStateBehaviors(CreateCustomerState.Created, new Behavior(Condition.TRUE, () -> mystart()));
         setStateBehaviors(CreateCustomerState.Wait, new Behavior(timerCondition, () -> timer()));
@@ -41,7 +41,7 @@ public class CreateCustomer extends Agent {
         Customer customre = new Customer();
         System.out.println("New customer created at :" + time());
         this.getGroup().addTemp(customre);
-        long next = time() + random.nextInt(6);
+        int next = time() + random.nextInt(6);
         if (next <= maxTime) {
             timerCondition.setAtTime(next);
         } else {
