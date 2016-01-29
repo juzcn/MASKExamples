@@ -9,7 +9,6 @@ import mask.executor.Monitor;
 import mask.executor.LocalExecutor;
 import mask.world.World;
 import mask.agent.Agent;
-import java.util.List;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;

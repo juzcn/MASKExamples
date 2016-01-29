@@ -28,7 +28,7 @@ public class ServiceHallConfig extends LocalModel<ServiceH> {
 
     public static void main(String args[]) {
         LocalExecutor executor = LocalExecutor.newLocalExecutor(new ServiceHallConfig(), null);
-        executor.start(1000, 100);
+        executor.start(1000);
     }
 
     @Override

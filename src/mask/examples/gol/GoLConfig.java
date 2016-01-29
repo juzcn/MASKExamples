@@ -38,7 +38,7 @@ public class GoLConfig extends LocalModel<GoL> {
 
     public static void main(String args[]) {
         LocalExecutor executor = LocalExecutor.newLocalExecutor(new GoLConfig(), null);
-        executor.start(100, 0);
+        executor.start(100);
     }
 
     @Override

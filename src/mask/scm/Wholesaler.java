@@ -20,7 +20,7 @@ public class Wholesaler extends Company implements IBuyer, ISupplier {
     @Override
     public boolean periodBegin() {
         productsReception();
-        state = State.WaitingOrders;
+        state = State.WaitOrders;
         return true;
     }
 

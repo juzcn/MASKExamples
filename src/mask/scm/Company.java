@@ -29,7 +29,7 @@ public abstract class Company extends Agent {
     protected int inventoryPeriods;
 
     protected static enum State {
-        WaitNewPeriod, WaitingOrders, WaitingReplenishmentFeedback
+        WaitNewPeriod, WaitOrders, WaitOrderFeedback
     };
     private int productChannel;
     private int orderChannel;
@@ -43,9 +43,9 @@ public abstract class Company extends Agent {
         orderChannel = service().newNamedChannel(this.getUniqueID(), "Order");
         replenishmnetChannel = service().newNamedChannel(this.getUniqueID(), "Replenishment");
         setStateBehaviors(State.WaitNewPeriod, new Behavior(new EachTimeCondition(), () -> periodBegin()));
-        setStateBehaviors(State.WaitingReplenishmentFeedback,
+        setStateBehaviors(State.WaitOrderFeedback,
                 new Behavior(() -> service().hasMessage(replenishmnetChannel), () -> replenishmentFeedBack()));
-        setStateBehaviors(State.WaitingOrders, new Behavior(() -> service().hasMessage(orderChannel), () -> ordersProcessing()));
+        setStateBehaviors(State.WaitOrders, new Behavior(() -> service().hasMessage(orderChannel), () -> ordersProcessing()));
 
     }
 
@@ -55,7 +55,7 @@ public abstract class Company extends Agent {
 
     public boolean periodBegin() {
         productsReception();
-        state = State.WaitingOrders;
+        state = State.WaitOrders;
         return true;
     }
 
@@ -119,7 +119,7 @@ public abstract class Company extends Agent {
             }
             replenishmentOrderQuantity = total - inventory;
             service().send(getUniqueID(), withSupplier.supplier, "Order", replenishmentOrderQuantity);
-            state = State.WaitingReplenishmentFeedback;
+            state = State.WaitOrderFeedback;
         } else {
             service().send(getUniqueID(), withSupplier.supplier, "Order", 0);
             state = State.WaitNewPeriod;

@@ -42,7 +42,7 @@ public class SchellingConfig extends LocalModel<Schelling> {
 
     public static void main(String args[]) {
         LocalExecutor executor = LocalExecutor.newLocalExecutor(new SchellingConfig(), null);
-        executor.start(100, 0);
+        executor.start(100);
     }
 
     @Override
