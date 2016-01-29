@@ -17,6 +17,7 @@ public class SchellingDistributed {
     public static void main(String args[]) {
         DistributedModel config = new DistributedModel("java:global.MASKBeans.MASKBeans-ejb.SchellingBean", new SchellingRemoteConfig());
         config.setSteps(2);
+        config.disableLogging();
         MasterExecutor.newDistributedExecutor(config).run();
     }
 
