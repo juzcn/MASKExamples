@@ -42,7 +42,8 @@ public class SupplyChain extends LocalModel {
 
     public static void main(String args[]) {
         SupplyChain sc = new SupplyChain();
-        LocalExecutor executor = MasterExecutor.newLocalComputing(sc);
+        sc.disableLogging();
+        LocalExecutor executor = MasterExecutor.newLocalExecutor(sc);
         executor.start(50);
     }
 }

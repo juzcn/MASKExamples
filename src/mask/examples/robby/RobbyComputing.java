@@ -119,7 +119,7 @@ public class RobbyComputing extends LocalModel {
             System.out.println("Strategy " + i);
             for (int j = 0; j < 1; j++) {
                 System.out.println("Round " + j);
-                LocalExecutor executor = MasterExecutor.newLocalComputing(new RobbyComputing(initialPopulation[i]));
+                LocalExecutor executor = MasterExecutor.newLocalExecutor(new RobbyComputing(initialPopulation[i]));
                 executor.start(200);
                 System.out.println("Round "+j + " Result = "+executor.getResult());
             }

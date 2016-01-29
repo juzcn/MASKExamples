@@ -42,7 +42,7 @@ public class SchellingMonitor extends Monitor {
     private TextArea textArea;
 
     @Override
-    public void process(Agent[] agents) {
+    public void agents(Agent[] agents) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         for (Agent p : agents) {
             if (((Person) p).getMoved()) {
@@ -71,7 +71,7 @@ public class SchellingMonitor extends Monitor {
     }
 
     @Override
-    public void process(World world) {
+    public void world(World world) {
     }
 
     public static class Console extends OutputStream {

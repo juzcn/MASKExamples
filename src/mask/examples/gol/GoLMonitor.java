@@ -76,7 +76,7 @@ public class GoLMonitor extends Monitor {
     }
 
     @Override
-    public void process(Agent[] agents) {
+    public void agents(Agent[] agents) {
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
         for (Agent lr : agents) {
@@ -105,7 +105,7 @@ public class GoLMonitor extends Monitor {
     }
 
     @Override
-    public void process(World world) {
+    public void world(World world) {
     }
 
 }
