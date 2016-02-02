@@ -10,18 +10,12 @@ package mask.scm;
  * @author zj
  */
 public class Wholesaler extends Company implements IBuyer, ISupplier {
+
     @Override
     public void setup() {
         super.setup();
         inventoryPeriods = 20;
-        inventory = 2000;
-    }
-
-    @Override
-    public boolean periodBegin() {
-        productsReception();
-        state = State.WaitOrders;
-        return true;
+        inventory = 1000;
     }
 
     @Override
@@ -32,6 +26,5 @@ public class Wholesaler extends Company implements IBuyer, ISupplier {
         }
         return f;
     }
-
 
 }

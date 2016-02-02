@@ -5,6 +5,8 @@
  */
 package mask.scm;
 
+import java.io.Serializable;
+
 /**
  *
  * @author zj
@@ -15,16 +17,16 @@ public class Manufacturer extends Company implements ISupplier {
     public void setup() {
         super.setup();
         inventoryPeriods = 30;
-        inventory = 3000;
+        inventory = 2000;
     }
 
-    public class ProductionPlan {
+    public class ProductionPlan implements Serializable {
 
         private int produce() {
             return 100;
         }
     }
-    private ProductionPlan productionPlan = new ProductionPlan();
+    private final ProductionPlan productionPlan = new ProductionPlan();
 
     @Override
     protected int[] forecast(int periods) {
@@ -37,12 +39,13 @@ public class Manufacturer extends Company implements ISupplier {
 
     @Override
     public void productsReception() {
-        productsReceived = productionPlan.produce();
-        inventory += productsReceived;
+        received = productionPlan.produce();
+        inventory += received;
     }
 
     @Override
     public void replenishment() {
         // ajust production plan if necessary
+        state = State.WaitOrders;
     }
 }

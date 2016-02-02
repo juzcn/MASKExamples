@@ -33,25 +33,36 @@ public class Retailer extends Company implements IBuyer {
             return 100;
         }
     }
-    private final OrderGenerator orderGenerator = new OrderGenerator();
+    private transient final OrderGenerator orderGenerator = new OrderGenerator();
 
     @Override
     public boolean periodBegin() {
-        productsReception();
-        ordersProcessing();
-        replenishment();
+        super.periodBegin();
+        if (replenishments==0) {
+            ordersProcessing();
+            state=State.WaitNewPeriod;
+        }
         return true;
     }
 
     @Override
     public boolean ordersProcessing() {
-        totalOrderQuantity = orderGenerator.generate();
-        if (inventory >= totalOrderQuantity) {
-            inventory -= totalOrderQuantity;
+        ordered = orderGenerator.generate();
+        if (getInventory() >= getOrdered()) {
+            inventory -= getOrdered();
         } else {
-            totalStockout = totalOrderQuantity - inventory;
+            stockout = getOrdered() - getInventory();
             inventory = 0;
         }
         return true;
     }
+
+    @Override
+    public boolean replenishmentFeedBack() {
+        super.replenishmentFeedBack();
+        ordersProcessing();
+        state = State.WaitNewPeriod;
+        return true;
+    }
+
 }

@@ -27,10 +27,7 @@ public class SupplyChain extends LocalModel {
         wholesaler = new Wholesaler();
         manufacturer = new Manufacturer();
 
-        Shipper shipper = new Shipper();
-        container.addAll(retailer, manufacturer, wholesaler, shipper);
-        manufacturer.setShipper(shipper);
-        wholesaler.setShipper(shipper);
+        container.addAll(retailer, manufacturer, wholesaler);
         return container;
     }
 
@@ -44,6 +41,7 @@ public class SupplyChain extends LocalModel {
         SupplyChain sc = new SupplyChain();
         sc.disableLogging();
         LocalExecutor executor = MasterExecutor.newLocalExecutor(sc);
-        executor.start(50);
+        executor.threadStart(50);
+
     }
 }

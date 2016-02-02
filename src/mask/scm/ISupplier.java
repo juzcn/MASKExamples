@@ -11,8 +11,6 @@ package mask.scm;
  */
 public interface ISupplier {
 
-    public void setShipper(Shipper shipper);
-
     public int getUniqueID();
 
     public void addBuyerContract(Contract contract);

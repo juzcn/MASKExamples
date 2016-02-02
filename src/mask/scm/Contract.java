@@ -5,11 +5,13 @@
  */
 package mask.scm;
 
+import java.io.Serializable;
+
 /**
  *
  * @author zj
  */
-public class Contract {
+public class Contract implements Serializable {
 
     int leadTime;
     int buyer;
