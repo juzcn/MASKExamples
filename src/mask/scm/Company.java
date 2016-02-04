@@ -63,6 +63,13 @@ public abstract class Company extends Agent implements Serializable {
         return ordered;
     }
 
+    /**
+     * @return the toReceive
+     */
+    public int getToReceive() {
+        return toReceive;
+    }
+
     protected static enum State {
         WaitNewPeriod, WaitOrders, WaitOrderFeedback
     };
@@ -87,6 +94,7 @@ public abstract class Company extends Agent implements Serializable {
         orderCount = 0;
         stockout = 0;
         ordered = 0;
+        toReceive = 0;
         replenishment();
         productsReception();
         return true;
@@ -182,6 +190,8 @@ public abstract class Company extends Agent implements Serializable {
         supplier.addBuyerContract(contract);
     }
 
+    private int toReceive;
+
     public boolean replenishmentFeedBack() {
         MKMessage message = service().receive(replenishmnetChannel);
         shipOrder = (ShipOrder) message.getContent();
@@ -189,6 +199,7 @@ public abstract class Company extends Agent implements Serializable {
             System.out.println("Supplier stockout");
         }
         shipOrder = (ShipOrder) message.getContent();
+        toReceive = shipOrder.getQuantity();
         state = State.WaitOrders;
         return true;
     }

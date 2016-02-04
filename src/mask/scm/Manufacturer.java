@@ -17,13 +17,13 @@ public class Manufacturer extends Company implements ISupplier {
     public void setup() {
         super.setup();
         inventoryPeriods = 30;
-        inventory = 2000;
+        inventory = 10000000;
     }
 
     public class ProductionPlan implements Serializable {
 
         private int produce() {
-            return 100;
+            return 1000000;
         }
     }
     private final ProductionPlan productionPlan = new ProductionPlan();

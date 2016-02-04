@@ -16,25 +16,37 @@ import mask.rununit.RunGroup;
  */
 public class SupplyChain extends LocalModel {
 
-    Retailer retailer;
+    Retailer[] retailers;
     Manufacturer manufacturer;
-    Wholesaler wholesaler;
+    Wholesaler[] wholesalers;
 
     @Override
     public RunGroup createContainer() {
-        RunGroup container = RunGroup.newThreadGroup();
-        retailer = new Retailer();
-        wholesaler = new Wholesaler();
+        RunGroup container = RunGroup.newThreadPoolGroup(10);
+        retailers = new Retailer[10000];
+        for (int i = 0; i < 10000; i++) {
+            retailers[i] = new Retailer();
+        }
+        wholesalers = new Wholesaler[100];
+        for (int i = 0; i < 100; i++) {
+            wholesalers[i] = new Wholesaler();
+        }
         manufacturer = new Manufacturer();
 
-        container.addAll(retailer, manufacturer, wholesaler);
+        container.addAll(retailers);
+        container.addAll(wholesalers);
+        container.add(manufacturer);
         return container;
     }
 
     @Override
     public void setup() {
-        Company.contract(retailer, wholesaler, 3);
-        Company.contract(wholesaler, manufacturer, 9);
+        for (int i = 0; i < 100; i++) {
+            Company.contract(wholesalers[i], manufacturer, 9);
+        }
+        for (int i = 0; i < 10000; i++) {
+            Company.contract(retailers[i], wholesalers[i / 100], 3);
+        }
     }
 
     public static void main(String args[]) {

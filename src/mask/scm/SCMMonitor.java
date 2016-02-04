@@ -11,17 +11,14 @@ import mask.world.World;
 import mask.agent.Agent;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 /**
  *
@@ -38,7 +35,6 @@ public class SCMMonitor extends Monitor {
     public static void main(String[] args) {
         Application.launch(args);
     }
-    private XYChart<Number, Number> xyChart;
 
     private TableView<Company> retailerTableView;
     private TableView<Company> wholesalerTableView;
@@ -55,6 +51,9 @@ public class SCMMonitor extends Monitor {
         TableColumn<Company, Integer> replenishmentCol = new TableColumn<>("Replenishment");
         replenishmentCol.setCellValueFactory(new PropertyValueFactory<>("replenishments"));
 
+        TableColumn<Company, Integer> toReceiveCol = new TableColumn<>("To receive");
+        toReceiveCol.setCellValueFactory(new PropertyValueFactory<>("toReceive"));
+
         TableColumn<Company, Integer> receivedCol = new TableColumn<>("Received");
         receivedCol.setCellValueFactory(new PropertyValueFactory<>("received"));
 
@@ -64,13 +63,20 @@ public class SCMMonitor extends Monitor {
         TableColumn<Company, Integer> stockoutCol = new TableColumn<>("Stockout");
         stockoutCol.setCellValueFactory(new PropertyValueFactory<>("stockout"));
 
-        tableView.getColumns().addAll(timeCol, inventoryCol, replenishmentCol, receivedCol, orderedCol, stockoutCol);
+        tableView.getColumns().addAll(timeCol, inventoryCol, replenishmentCol, toReceiveCol, receivedCol, orderedCol, stockoutCol);
         return tableView;
     }
 
+    private XYChart.Series<Number, Number> inventorySeries;
+    private XYChart.Series<Number, Number> retailerSeries;
+    private XYChart.Series<Number, Number> wholesalerSeries;
+    private XYChart.Series<Number, Number> manufacturerSeries;
+    private XYChart.Series<Number, Number> stockoutSeries;
+    private XYChart<Number, Number> xyChart;
+
     @Override
     protected Tab[] createTabs() {
-        Tab[] tabs = new Tab[3];
+        Tab[] tabs = new Tab[4];
         retailerTableView = createTableView();
         wholesalerTableView = createTableView();
         manufacturerTableView = createTableView();
@@ -80,9 +86,29 @@ public class SCMMonitor extends Monitor {
         tabs[1].setClosable(false);
         tabs[2] = new Tab("Manufacturer", manufacturerTableView);
         tabs[2].setClosable(false);
+
+        NumberAxis timeAxis = new NumberAxis();
+        timeAxis.setLabel("Time");
+        NumberAxis numberAxis = new NumberAxis();
+        numberAxis.setLabel("Quantity");
+
+        xyChart = new LineChart(timeAxis, numberAxis);
+        inventorySeries = new XYChart.Series<>();
+        inventorySeries.setName("Total Inventory");
+        retailerSeries = new XYChart.Series<>();
+        retailerSeries.setName("Retailer Inventory");
+        wholesalerSeries = new XYChart.Series<>();
+        wholesalerSeries.setName("Wholesaler Inventory");
+        manufacturerSeries = new XYChart.Series<>();
+        manufacturerSeries.setName("Manufacturer Inventory");
+        stockoutSeries = new XYChart.Series<>();
+        stockoutSeries.setName("Retailer stockout");
+        xyChart.getData().addAll(inventorySeries, retailerSeries, wholesalerSeries, manufacturerSeries,stockoutSeries);
+        tabs[3] = new Tab("Inventory & Stockout", xyChart);
+        tabs[3].setClosable(false);
+
         return tabs;
     }
-    private XYChart.Series<Number, Number> dataSeries;
 
     @Override
     protected LocalExecutor newExecutor() {
@@ -91,25 +117,50 @@ public class SCMMonitor extends Monitor {
 
     @Override
     public void agents(Agent[] agents) {
+        int totalInventory = 0;
+        int retailerInventory = 0;
+        int wholesalerInventory = 0;
+        int totalStockout=0;
+        int time = 0;
         for (Agent a : agents) {
+            time = a.getTime();
+            totalInventory += ((Company) a).getInventory();
             if (a instanceof Retailer) {
-                Platform.runLater(() -> {
-                    retailerTableView.getItems().add((Company) a);
-                    retailerTableView.scrollTo((Company) a);
-                });
+                retailerInventory+=((Company)a).getInventory();
+                totalStockout+=((Company)a).getStockout();
+                if (a.getName().contains("[1]")) {
+                    Platform.runLater(() -> {
+                        retailerTableView.getItems().add((Company) a);
+                        retailerTableView.scrollTo((Company) a);
+                    });
+                }
             } else if (a instanceof Wholesaler) {
-                Platform.runLater(() -> {
-                    wholesalerTableView.getItems().add((Company) a);
-                    wholesalerTableView.scrollTo((Company) a);
-                });
+                wholesalerInventory+=((Company)a).getInventory();
+                if (a.getName().contains("[1]")) {
+                    Platform.runLater(() -> {
+                        wholesalerTableView.getItems().add((Company) a);
+                        wholesalerTableView.scrollTo((Company) a);
+                    });
+                }
             } else {
                 Platform.runLater(() -> {
                     manufacturerTableView.getItems().add((Company) a);
                     manufacturerTableView.scrollTo((Company) a);
+                    manufacturerSeries.getData().add(new XYChart.Data(a.getTime(), ((Company) a).getInventory()));
                 });
 
             }
         }
+        final int i = totalInventory;final int r=retailerInventory;
+        final int t = time;final int w=wholesalerInventory;
+        final int s=totalStockout;
+        Platform.runLater(() -> {
+            inventorySeries.getData().add(new XYChart.Data(t, i));
+            retailerSeries.getData().add(new XYChart.Data(t, r));
+            wholesalerSeries.getData().add(new XYChart.Data(t, w));
+            stockoutSeries.getData().add(new XYChart.Data(t, s));
+        });
+
     }
 
     @Override

@@ -15,14 +15,14 @@ public class Wholesaler extends Company implements IBuyer, ISupplier {
     public void setup() {
         super.setup();
         inventoryPeriods = 20;
-        inventory = 1000;
+        inventory = 200000;
     }
 
     @Override
     protected int[] forecast(int periods) {
         int[] f = new int[periods];
         for (int i = 0; i < periods; i++) {
-            f[i] = 100;
+            f[i] = 10000;
         }
         return f;
     }

@@ -38,9 +38,10 @@ public class Retailer extends Company implements IBuyer {
     @Override
     public boolean periodBegin() {
         super.periodBegin();
-        if (replenishments==0) {
+        if (replenishments == 0) {
             ordersProcessing();
-            state=State.WaitNewPeriod;
+ //           shipOrder = null;
+            state = State.WaitNewPeriod;
         }
         return true;
     }
