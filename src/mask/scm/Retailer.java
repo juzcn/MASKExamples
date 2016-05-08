@@ -5,17 +5,21 @@
  */
 package mask.scm;
 
+import java.util.Random;
+
 /**
  *
  * @author zj
  */
 public class Retailer extends Company implements IBuyer {
 
+    Random random = new Random();
+
     @Override
     public void setup() {
         super.setup();
         inventoryPeriods = 10;
-        inventory = 1000;
+        inventory = 300 + random.nextInt(8) * 100;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class Retailer extends Company implements IBuyer {
         super.periodBegin();
         if (replenishments == 0) {
             ordersProcessing();
- //           shipOrder = null;
+            //           shipOrder = null;
             state = State.WaitNewPeriod;
         }
         return true;
